@@ -16,15 +16,15 @@ public class DictionaryController : ControllerBase
         _dictionaryService = service; // Сохраняет ссылку на сервис для использования в методах.
     }
 
-    // Получить слово по его ID
+    // Получить слово по ID
     
-    [HttpGet("{id}")] // HTTP GET запрос с параметром {id} в маршруте (например, /api/dictionary/1).
-    public async Task<IActionResult> GetWord(int id)
+    [HttpGet("{englishWord}")] // HTTP GET запрос с параметром {englishWord} в маршруте (например, /api/dictionary/dog).
+    public async Task<IActionResult> GetWord(string englishWord)
     {
-        // Асинхронно запрашивает слово с указанным ID из словаря.
-        var result = await _dictionaryService.GetWordAsync(id);
-        if (result == null) 
-            return Ok($"Слово с id = {id} нет в словаре"); // Возвращает сообщение, если слово не найдено.
+        // Асинхронно запрашивает слово с указанным английским словом из словаря.
+        var result = await _dictionaryService.GetWordAsync(englishWord);
+        if (result == null)
+            return Ok($"Слово '{englishWord}' нет в словаре"); // Возвращает сообщение, если слово не найдено.
         return Ok(result); // Возвращает найденное слово в формате JSON.
     }
 
@@ -78,4 +78,21 @@ public class DictionaryController : ControllerBase
         // Возвращает случайное слово для тестирования.
         return Ok($"Переведите слово {result.EnglishWord}");
     }
+    
+    // Удалить слово по ID
+    
+    [HttpDelete("{englishWord}")] // HTTP DELETE запрос с параметром {englishWord} в маршруте (например, /api/dictionary/dog).
+    public async Task<IActionResult> DeleteWord(string englishWord)
+    {
+        // Асинхронно удаляем слово с указанным английским словом через сервис.
+        var result = await _dictionaryService.DeleteWordAsync(englishWord);
+
+        if (!result)
+        {
+            return NotFound(new { message = $"Слово '{englishWord}' не найдено" }); // Возвращаем ошибку 404, если слово не найдено.
+        }
+
+        return Ok(new { message = $"Слово '{englishWord}' успешно удалено" }); // Возвращаем успешное сообщение, если слово удалено.
+    }
+
 }

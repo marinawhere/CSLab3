@@ -9878,11 +9878,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectUniqueName": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplication2\\WebApplication2.csproj",
       "projectName": "WebApplication2",
-      "projectPath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectPath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplication2\\WebApplication2.csproj",
       "packagesPath": "C:\\Users\\Marina\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplication2\\obj\\",
+      "outputPath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplication2\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [

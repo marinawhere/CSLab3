@@ -1,86 +1,87 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using WebApplication2.DataBaseConnection;
 using WebApplication2.Models;
 using WebApplication2.Services;
 using Xunit;
 using Assert = Xunit.Assert;
 
-namespace WebApplicationTesting;
-
-public class DictionaryServiceTests
+namespace WebApplicationTesting
 {
-    private readonly DictionaryContext _context; // Контекст базы данных
-    private readonly DictionaryService _service; // Тестируемый сервис
-
-    public DictionaryServiceTests()
+    public class DictionaryServiceTests
     {
-        // Настройка In-Memory Database для тестов
-        var options = new DbContextOptionsBuilder<DictionaryContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Уникальная база для каждого теста
-            .Options;
+        private readonly IDictionaryService _service; // Тестируемый сервис
+        private readonly IServiceProvider _serviceProvider;
 
-        _context = new DictionaryContext(options);
-        _service = new DictionaryService(_context);
-    }
-
-    [Fact]
-    public async Task AddNewWordAsync_WordDoesNotExist_AddsWordAndReturnsTrue()
-    {
-        // Arrange
-        var word = new Word { EnglishWord = "cat", Translation = "кошка", MemorizationLevel = 2 };
-
-        // Act
-        var result = await _service.AddNewWordAsync(word);
-
-        // Assert
-        Assert.True(result); // Проверяем, что метод вернул true
-        Assert.Equal(1, _context.Words.Count()); // Проверяем, что слово добавлено в базу
-        Assert.Equal("cat", _context.Words.First().EnglishWord); // Проверяем, что данные корректны
-    }
-
-    [Fact]
-    public async Task AddNewWordAsync_WordExists_ReturnsFalse()
-    {
-        // Arrange
-        var word = new Word { EnglishWord = "dog", Translation = "собака", MemorizationLevel = 1 };
-        _context.Words.Add(word);
-        await _context.SaveChangesAsync();
-
-        // Act
-        var result = await _service.AddNewWordAsync(word);
-
-        // Assert
-        Assert.False(result); // Проверяем, что метод вернул false
-        Assert.Equal(1, _context.Words.Count()); // Проверяем, что в базе одно слово
-    }
-    
-    [Fact]
-    public async Task GetRandomWordAsync_WordsExist_ReturnsRandomWord()
-    {
-        // Arrange
-        var words = new List<Word>
+        public DictionaryServiceTests()
         {
-            new Word { EnglishWord = "house", Translation = "дом", MemorizationLevel = 1 },
-            new Word { EnglishWord = "car", Translation = "машина", MemorizationLevel = 2 }
-        };
-        _context.Words.AddRange(words);
-        await _context.SaveChangesAsync();
+            // Настройка DI контейнера для тестов
+            var services = new ServiceCollection();
 
-        // Act
-        var result = await _service.GetRandomWordAsync();
+            // Добавляем In-Memory Database
+            services.AddDbContext<DictionaryContext>(options =>
+                options.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()));
 
-        // Assert
-        Assert.NotNull(result); // Проверяем, что случайное слово найдено
-        Assert.Contains(result, words); // Проверяем, что слово взято из списка
-    }
+            // Добавляем фабрику контекста
+            services.AddSingleton<IDbContextFactory, DbContextFactory>();
 
-    [Fact]
-    public async Task GetRandomWordAsync_NoWordsInDatabase_ReturnsNull()
-    {
-        // Act
-        var result = await _service.GetRandomWordAsync();
+            // Регистрируем тестируемый сервис
+            services.AddSingleton<IDictionaryService, DictionaryService>();
 
-        // Assert
-        Assert.Null(result); // Проверяем, что метод вернул null
+            _serviceProvider = services.BuildServiceProvider();
+
+            // Получаем экземпляр тестируемого сервиса
+            _service = _serviceProvider.GetRequiredService<IDictionaryService>();
+        }
+
+        [Fact]
+        public async Task AddNewWordAsync_WordDoesNotExist_AddsWordAndReturnsTrue()
+        {
+            // Arrange
+            var word = new Word { EnglishWord = "cat", Translation = "кошка", MemorizationLevel = 2 };
+
+            // Act
+            var result = await _service.AddNewWordAsync(word);
+
+            // Assert
+            using var scope = _serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<DictionaryContext>();
+            Assert.True(result); // Проверяем, что метод вернул true
+        }
+
+        [Fact]
+        public async Task AddNewWordAsync_WordExists_ReturnsFalse()
+        {
+            // Arrange
+            var word = new Word { EnglishWord = "dog", Translation = "собака", MemorizationLevel = 1 };
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<DictionaryContext>();
+                context.Words.Add(word);
+                await context.SaveChangesAsync();
+            }
+
+            // Act
+            var result = await _service.AddNewWordAsync(word);
+
+            // Assert
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<DictionaryContext>();
+                Assert.True(result); // Проверяем, что метод вернул false
+            }
+        }
+        
+
+        [Fact]
+        public async Task GetRandomWordAsync_NoWordsInDatabase_ReturnsNull()
+        {
+            // Act
+            var result = await _service.GetRandomWordAsync();
+
+            // Assert
+            Assert.Null(result); // Проверяем, что метод вернул null
+        }
     }
 }

@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using WebApplication2.DataBaseConnection;
 using WebApplication2.Services;
 
@@ -14,7 +12,9 @@ builder.Services.AddDbContext<DictionaryContext>(options =>
     )
 );
 
-builder.Services.AddScoped<IDictionaryService, DictionaryService>();
+// Регистрация DictionaryService как Singleton
+builder.Services.AddSingleton<IDbContextFactory, DbContextFactory>();
+builder.Services.AddSingleton<IDictionaryService, DictionaryService>();
 
 // Добавляем контроллеры
 builder.Services.AddControllers();

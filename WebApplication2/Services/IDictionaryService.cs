@@ -6,9 +6,9 @@ public interface IDictionaryService
 {
     Task<bool> AddNewWordAsync(Word word);
     
-    
-    Task<Word?> GetWordAsync(int id);
-
+    Task<Word?> GetWordAsync(string englishWord);
     
     Task<Word?> GetRandomWordAsync();
+
+    Task<bool> DeleteWordAsync(string englishWord);
 }

@@ -1,23 +1,15 @@
-GET http://localhost:5144/api/dictionary/1
+GET http://localhost:5144/api/dictionary/dog
 ###
 
-POST http://localhost:5144/api/dictionary/add?englishWord=dog&translation=собака&memorizationLevel=1
+POST http://localhost:5144/api/dictionary/add?englishWord=moon&translation=луна&memorizationLevel=2
 ###
 
-POST http://localhost:5144/api/dictionary/add?englishWord=friend&translation=друг&memorizationLevel=1
+GET http://localhost:5144/api/dictionary/baby
 ###
 
 GET http://localhost:5144/api/dictionary/test
 ###
 
-POST http://localhost:5144/api/dictionary/add?englishWord=egg&translation=яйцо&memorizationLevel=1
+DELETE http://localhost:5144/api/dictionary/moon
 ###
 
-POST http://localhost:5144/api/dictionary/add?englishWord=ITMO&translation=ИТМО&memorizationLevel=3
-###
-
-POST http://localhost:5144/api/dictionary/add?englishWord=programming&translation=программирование&memorizationLevel=3
-###
-
-GET http://localhost:5144/api/dictionary/8
-###

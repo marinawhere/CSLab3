@@ -6,40 +6,65 @@ namespace WebApplication2.Services;
 
 public class DictionaryService : IDictionaryService
 {
-    private readonly DictionaryContext _dictionaryContext;
+    private readonly IDbContextFactory _dbContextFactory;
 
-    public DictionaryService(DictionaryContext dictionaryContext)
+    public DictionaryService(IDbContextFactory dbContextFactory)
     {
-        _dictionaryContext = dictionaryContext;
+        _dbContextFactory = dbContextFactory;
     }
-    
+
     public async Task<bool> AddNewWordAsync(Word word)
     {
-        if (await _dictionaryContext.Words.AnyAsync(x => x.EnglishWord == word.EnglishWord && x.Translation == word.Translation))
+        using (var context = _dbContextFactory.CreateContext())
         {
-            return false;
+            if (await context.Words.AnyAsync(x => x.EnglishWord == word.EnglishWord && x.Translation == word.Translation))
+            {
+                return false;
+            }
+            context.Words.Add(word);
+            await context.SaveChangesAsync();
+            return true;
         }
-        _dictionaryContext.Words.Add(word);
-        await _dictionaryContext.SaveChangesAsync();
-        return true;
     }
-    
 
     
-    public async Task<Word?> GetWordAsync(int id)
+    public async Task<Word?> GetWordAsync(string englishWord)
     {
-        var word = await _dictionaryContext.Words.FindAsync(id);
-        if (word == null) return null;
-        return word;
+        using (var context = _dbContextFactory.CreateContext())
+        {
+            return await context.Words
+                .FirstOrDefaultAsync(x => x.EnglishWord == englishWord); // Ищем слово по английскому слову.
+        }
     }
 
 
     public async Task<Word?> GetRandomWordAsync()
     {
-        var words = await _dictionaryContext.Words.ToListAsync();
-        if (!words.Any()) return null;
-
-        var randomWord = words[new Random().Next(words.Count)];
-        return randomWord;
+        using (var context = _dbContextFactory.CreateContext())
+        {
+            var words = await context.Words.ToListAsync();
+            if (!words.Any()) return null;
+            return words[new Random().Next(words.Count)];
+        }
     }
+    
+    
+    public async Task<bool> DeleteWordAsync(string englishWord)
+    {
+        using (var context = _dbContextFactory.CreateContext())
+        {
+            var word = await context.Words
+                .FirstOrDefaultAsync(x => x.EnglishWord == englishWord); // Ищем слово по английскому слову.
+
+            if (word == null)
+            {
+                return false; // Если слово не найдено, возвращаем false.
+            }
+
+            context.Words.Remove(word); // Удаляем слово.
+            await context.SaveChangesAsync(); // Сохраняем изменения.
+            return true; // Возвращаем true, если удаление успешно.
+        }
+    }
+
 }

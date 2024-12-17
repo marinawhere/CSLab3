@@ -202,3 +202,4 @@ C:\Users\Marina\RiderProjects\WebApplication2\WebApplication2\obj\Debug\net8.0\r
 C:\Users\Marina\RiderProjects\WebApplication2\WebApplication2\obj\Debug\net8.0\WebApplication2.pdb
 C:\Users\Marina\RiderProjects\WebApplication2\WebApplication2\obj\Debug\net8.0\WebApplication2.genruntimeconfig.cache
 C:\Users\Marina\RiderProjects\WebApplication2\WebApplication2\obj\Debug\net8.0\ref\WebApplication2.dll
+C:\Users\Marina\RiderProjects\WebApplication2\WebApplication2\obj\Debug\net8.0\WebApplication2.sourcelink.json
