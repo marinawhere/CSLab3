@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebApplicationTesting
-build_property.ProjectDir = C:\Users\Marina\Desktop\WebApplication2_норм\WebApplicationTesting\
+build_property.ProjectDir = C:\Users\Marina\RiderProjects\WebApplication2\WebApplicationTesting\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

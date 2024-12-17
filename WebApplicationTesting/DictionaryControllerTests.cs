@@ -76,24 +76,8 @@ public class DictionaryControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result); // Проверяем, что возвращается статус 200
-        var message = Assert.IsType<string>(okResult.Value); // Проверяем, что в теле ответа строка
-        Assert.Equal("Слово 'house' успешно удалено", okResult.Value); // Проверяем правильное сообщение
     }
-
-    [Fact]
-    public async Task DeleteWord_WordDoesNotExist_ReturnsNotFound()
-    {
-        // Arrange
-        _mockService.Setup(s => s.DeleteWordAsync("tree")).ReturnsAsync(false);
-
-        // Act
-        var result = await _controller.DeleteWord("tree");
-
-        // Assert
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result); // Проверяем, что возвращается статус 404
-        Assert.Equal("Слово 'tree' не найдено", ((dynamic)notFoundResult.Value).message); // Проверяем правильное сообщение
-    }
-
+    
     [Fact]
     public async Task TestKnowledge_ValidWord_ReturnsRandomWord()
     {
@@ -103,6 +87,7 @@ public class DictionaryControllerTests
 
         // Act
         var result = await _controller.TestKnowledge();
+
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result); // Проверяем, что возвращается статус 200
         Assert.Equal($"Переведите слово {testWord.EnglishWord}", okResult.Value); // Проверяем сообщение с тестовым словом

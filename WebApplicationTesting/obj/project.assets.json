@@ -10292,11 +10292,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplicationTesting\\WebApplicationTesting.csproj",
+      "projectUniqueName": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplicationTesting\\WebApplicationTesting.csproj",
       "projectName": "WebApplicationTesting",
-      "projectPath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplicationTesting\\WebApplicationTesting.csproj",
+      "projectPath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplicationTesting\\WebApplicationTesting.csproj",
       "packagesPath": "C:\\Users\\Marina\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplicationTesting\\obj\\",
+      "outputPath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplicationTesting\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
@@ -10319,8 +10319,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplication2\\WebApplication2.csproj": {
-              "projectPath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplication2\\WebApplication2.csproj"
+            "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj": {
+              "projectPath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj"
             }
           }
         }

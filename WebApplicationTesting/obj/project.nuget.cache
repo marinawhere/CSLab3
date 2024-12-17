@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/ZlPXXygvjE=",
+  "dgSpecHash": "x1kT0t/ay8E=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Marina\\Desktop\\WebApplication2_норм\\WebApplicationTesting\\WebApplicationTesting.csproj",
+  "projectFilePath": "C:\\Users\\Marina\\RiderProjects\\WebApplication2\\WebApplicationTesting\\WebApplicationTesting.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Marina\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\Marina\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",

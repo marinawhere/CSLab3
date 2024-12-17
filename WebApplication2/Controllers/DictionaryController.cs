@@ -16,7 +16,7 @@ public class DictionaryController : ControllerBase
         _dictionaryService = service; // Сохраняет ссылку на сервис для использования в методах.
     }
 
-    // Получить слово по ID
+    // Получить слово по его английской версии
     
     [HttpGet("{englishWord}")] // HTTP GET запрос с параметром {englishWord} в маршруте (например, /api/dictionary/dog).
     public async Task<IActionResult> GetWord(string englishWord)
@@ -79,7 +79,7 @@ public class DictionaryController : ControllerBase
         return Ok($"Переведите слово {result.EnglishWord}");
     }
     
-    // Удалить слово по ID
+    // Удалить слово по его английской версии
     
     [HttpDelete("{englishWord}")] // HTTP DELETE запрос с параметром {englishWord} в маршруте (например, /api/dictionary/dog).
     public async Task<IActionResult> DeleteWord(string englishWord)
